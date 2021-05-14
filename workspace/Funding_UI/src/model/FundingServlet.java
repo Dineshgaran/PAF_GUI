@@ -37,7 +37,7 @@ public class FundingServlet {
 				    LocalDate published_date= LocalDate.now();
 					LocalTime published_time= LocalTime.now();
 			 	 	 // create a prepared statement
-				 	 String query = "INSERT INTO Funding_Bodies_Post(`postTitle`,`content`,`publishedDate`,`publishedTime`)" + " VALUES (?, ?, ?, ?)"; 
+				 	 String query = "INSERT INTO Funding_Bodies_Post(`title`,`content`,`published_date`,`published_time`)" + " VALUES (?, ?, ?, ?)"; 
 					 PreparedStatement preparedStmt = con.prepareStatement(query); 					 
 					 
 					 // binding values
@@ -76,7 +76,8 @@ public class FundingServlet {
 				 } 
 				 
 				 // Prepare the html table to be displayed
-				 output = "<table border='1'><tr><th>Post Title</th>" +
+				 output = "<table border='1'><tr><th>Post ID</th>" +
+				 "<th>Post Title</th>" +
 				 "<th>Content</th>" + 
 				 "<th>Published Date</th>" + 
 				 "<th>Published Time</th>" +
@@ -90,27 +91,29 @@ public class FundingServlet {
 				 // iterate through the rows in the result set
 				 while (rs.next()) 
 				 { 
-					 String postID = Integer.toString(rs.getInt("postID")); 
-					 String postTitle = rs.getString("postTitle"); 
+					 String postID = Integer.toString(rs.getInt("id")); 
+					 String postTitle = rs.getString("title"); 
 					 String content = rs.getString("content"); 
-					 String publishedDate = rs.getString("publishedDate"); 
-					 String publishedTime = rs.getString("publishedTime"); 
+					 String publishedDate = rs.getString("published_date"); 
+					 String publishedTime = rs.getString("published_time"); 
 					 
 				
 					 
 					 
 					 
 					 // Add into the html table
-					 output += "<tr><td>" + postID + "</td>"; 
+					 output += "<tr><td><input id='hidpostNOUpdate' name='hidpostNOUpdate' type='hidden' value='" + postID
+								+ "'>" + postID + "</td>"; 
 					 output += "<td>" + postTitle + "</td>"; 
 					 output += "<td>" + content + "</td>"; 
 					 output += "<td>" + publishedDate + "</td>"; 
 					 output += "<td>" + publishedTime + "</td>"; 
 					 
 					 
+					 
 					 // buttons
 					 output += "<td><input name='btnUpdate' type='button' value='Update' class='btnUpdate btn btn-secondary'></td>"
-					 + "<td><input name='btnRemove' type='button' value='Remove' class='btnRemove btn btn-danger' data-itemid='" 
+					 + "<td><input name='btnRemove' type='button' value='Remove' class='btnRemove btn btn-danger' data-postid='" 
 					 + postID + "'>" + "</td></tr>";
 				 } 
 				 	 con.close(); 
@@ -138,7 +141,7 @@ public class FundingServlet {
 		 LocalDate published_date= LocalDate.now();
 		 LocalTime published_time= LocalTime.now();
 				 // create a prepared statement
-				 String query = "UPDATE Funding_Bodies_Post SET postTitle=? , content=? , publishedDate=? , publishedTime=? , WHERE post_ID=?"; 
+				 String query = "UPDATE Funding_Bodies_Post SET title=? , content=? , published_date=? , published_time=? WHERE id=?"; 
 				 PreparedStatement preparedStmt = con.prepareStatement(query); 
 				 
 				 // binding values
@@ -173,7 +176,7 @@ public class FundingServlet {
 			 } 
 			 
 			 	 // create a prepared statement
-				 String query = "DELETE FROM Funding_Bodies_Post WHERE postID=?"; 
+				 String query = "DELETE FROM Funding_Bodies_Post WHERE id=?"; 
 				 PreparedStatement preparedStmt = con.prepareStatement(query); 
 				 
 				 // binding values

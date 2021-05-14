@@ -34,7 +34,7 @@
 						
 						<div class="form-outline mb-4">
 						    <label class="form-label" for="form6Example3" class="col-sm-2 col-form-label col-form-label-sm">Post ID:</label>
-						    <input type="text" id="postID" class="form-control" name="postID">						    
+						    <input type="text" id="postID" class="form-control" name="postID"> <hidden>						    
 						</div>
 						
 						<div class="form-outline mb-4">
